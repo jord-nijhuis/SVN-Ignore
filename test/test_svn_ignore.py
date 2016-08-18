@@ -7,6 +7,7 @@ import sys
 import six
 from src.svn_ignore import SVNIgnore
 
+
 class TestSVNIgnore(unittest.TestCase):
 
     def setUp(self):
@@ -20,7 +21,7 @@ class TestSVNIgnore(unittest.TestCase):
         if os.path.isdir(self.checkout_path):
             shutil.rmtree(self.checkout_path)
 
-        #Checkout SVN
+        # Checkout SVN
         process = subprocess.Popen(
             [
                 'svn',
@@ -57,7 +58,7 @@ class TestSVNIgnore(unittest.TestCase):
     def test_get_ignores_from_file_with_comments(self):
         """Check retrieving ignores from file without removal of comments"""
 
-        ignores = self.svn_ignore.get_ignores_from_file(self.checkout_path, removeComments=False)
+        ignores = self.svn_ignore.get_ignores_from_file(self.checkout_path, remove_comments=False)
         six.assertCountEqual(self, [
             'VALUE1',
             '#comment'
@@ -80,7 +81,7 @@ class TestSVNIgnore(unittest.TestCase):
             'status'
         ], cwd=path)
 
-        #Check if the file was added
+        # Check if the file was added
         self.assertEqual('A       exception.txt\n', output.decode())
 
     def test_add_exception_on_already_added_file(self):
@@ -123,6 +124,7 @@ class TestSVNIgnore(unittest.TestCase):
         six.assertCountEqual(self, ['VALUE1'], ignores)
 
     def test_apply(self):
+        """Test the apply with default values"""
 
         self.svn_ignore.apply()
 
@@ -150,11 +152,12 @@ class TestSVNIgnore(unittest.TestCase):
             'status'
         ], cwd=self.checkout_path)
 
-        #Check if the file was added
+        # Check if the file was added
         self.assertIn('A       directory_exception/exception.txt', output.decode().splitlines())
 
-
     def test_apply_overwrite(self):
+        """Test the apply with overwrite enabled"""
+
         self.svn_ignore.overwrite = True
         self.svn_ignore.apply()
 
@@ -167,7 +170,8 @@ class TestSVNIgnore(unittest.TestCase):
         ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory_props'))
         six.assertCountEqual(self, ['VALUE1'], ignores)
 
-    def test_apply_no_recusrive(self):
+    def test_apply_no_recursive(self):
+        """Test apply with recursive disabled"""
         self.svn_ignore.recursive = False
         self.svn_ignore.apply()
 
