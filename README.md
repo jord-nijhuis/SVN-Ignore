@@ -1,8 +1,8 @@
 # SVN-Ignore
-[![PyPI](https://img.shields.io/pypi/v/svn-ignore.svg?maxAge=2592000)](https://pypi.python.org/pypi/SVN-Ignore/1.0.4)
-[![Build Status](https://travis-ci.org/Sidesplitter/SVN-Ignore.svg?branch=master)](https://travis-ci.org/Sidesplitter/SVN-Ignore)
-[![PyPI](https://img.shields.io/pypi/dd/svn-ignore.svg?maxAge=2592000)](https://pypi.python.org/pypi/SVN-Ignore/1.0.4)
-[![PyPI](https://img.shields.io/pypi/pyversions/svn-ignore.svg?maxAge=2592000)](https://pypi.python.org/pypi/SVN-Ignore)
+[![PyPI](https://img.shields.io/pypi/v/svn-ignore.svg)](https://pypi.python.org/pypi/SVN-Ignore/)
+[![Build Status](https://travis-ci.org/Sidesplitter/SVN-Ignore.svg)](https://travis-ci.org/Sidesplitter/SVN-Ignore/)
+[![PyPI](https://img.shields.io/pypi/dd/svn-ignore.svg)](https://pypi.python.org/pypi/SVN-Ignore/)
+[![PyPI](https://img.shields.io/pypi/pyversions/svn-ignore.svg)](https://pypi.python.org/pypi/SVN-Ignore)
 
 An utility that provides .svnignore functionality similar to GIT. 
 
