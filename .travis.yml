@@ -8,4 +8,8 @@ python:
   - "3.5"
 install:
   - pip install .
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq svn
 script: py.test
+sudo: required
