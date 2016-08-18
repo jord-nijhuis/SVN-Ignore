@@ -49,7 +49,7 @@ class TestSVNIgnore(unittest.TestCase):
         """Check ignores from file"""
 
         ignores = self.svn_ignore.get_ignores_from_file(self.checkout_path)
-        self.assertEqual([
+        self.assertItemsEqual([
             'VALUE1'
         ], ignores)
 
@@ -57,7 +57,7 @@ class TestSVNIgnore(unittest.TestCase):
         """Check retrieving ignores from file without removal of comments"""
 
         ignores = self.svn_ignore.get_ignores_from_file(self.checkout_path, removeComments=False)
-        self.assertEqual([
+        self.assertItemsEqual([
             'VALUE1',
             '#comment'
         ], ignores)
@@ -66,7 +66,7 @@ class TestSVNIgnore(unittest.TestCase):
         """Test getting ignores from the properties"""
 
         ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory_props'))
-        self.assertEqual([
+        self.assertItemsEqual([
             'EXISTING_VALUE'
         ], ignores)
 
@@ -74,7 +74,7 @@ class TestSVNIgnore(unittest.TestCase):
         """Test getting ignores from properties when the property is empty"""
 
         ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory'))
-        self.assertEqual([], ignores)
+        self.assertItemsEqual([], ignores)
 
     def test_set_ignore(self):
         """ Test setting the ignore property"""
@@ -82,20 +82,20 @@ class TestSVNIgnore(unittest.TestCase):
         self.svn_ignore.set_ignores(self.checkout_path, ['VALUE1'])
 
         ignores = self.svn_ignore.get_existing_ignores(self.checkout_path)
-        self.assertEqual(['VALUE1'], ignores)
+        self.assertItemsEqual(['VALUE1'], ignores)
 
     def test_apply(self):
 
         self.svn_ignore.apply()
 
         ignores = self.svn_ignore.get_existing_ignores(self.checkout_path)
-        self.assertEqual(['VALUE1'], ignores)
+        self.assertItemsEqual(['VALUE1'], ignores)
 
         ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory'))
-        self.assertEqual(['VALUE2', 'VALUE1'], ignores)
+        self.assertItemsEqual(['VALUE2', 'VALUE1'], ignores)
 
         ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory_props'))
-        self.assertEqual(['EXISTING_VALUE', 'VALUE1'], ignores)
+        self.assertItemsEqual(['EXISTING_VALUE', 'VALUE1'], ignores)
 
 
 if __name__ == '__main__':
