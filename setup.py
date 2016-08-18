@@ -4,17 +4,12 @@ import sys
 
 def get_long_description():
     try:
-        if(sys.version_info >= (3, 2, 0) and sys.version_info <= (3, 3, 0)):
-            raise Exception('This python version cannot run pypandoc')
-
-        print(sys.version_info)
-
         import pypandoc
         pypandoc.convert('README.md','rst',format='markdown', outputfile='README.rst')
-        long_description = sys.version_info
+        long_description = 'README.rst'
 
     except Exception:
-        print('WARNING: Failed to convert README.md to rst, pypandoc was not present')
+        print('WARNING: Failed to convert README.md to rst, pypandoc was not present, using md')
         f = open('README.md')
         long_description = f.read()
         f.close()
@@ -37,10 +32,7 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
     ],
     include_package_data=True,
