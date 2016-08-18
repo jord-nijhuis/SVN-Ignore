@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 from setuptools import setup
+import pypandoc
+
+
 
 setup(
     name='SVN-Ignore',
     py_modules=['sr', 'src.cli', 'src.svn_ignore'],
     version='1.1.1',
     description='An utility that provides .svnignore functionality similar to GIT',
-    long_description=open('README.md').read(),
+    long_description=pypandoc.convert('README.md','rst',format='markdown'),
     author='Jord Nijhuis',
     author_email='jord@nijhuis.me',
     url='https://github.com/Sidesplitter/SVN-Ignore',
@@ -30,6 +33,6 @@ setup(
         ],
     },
     keywords='svn cli util utils',
-    setup_requires=['pytest-runner'],
+    setup_requires=['pytest-runner', 'pypandoc'],
     tests_require=['pytest', 'six'],
 )
