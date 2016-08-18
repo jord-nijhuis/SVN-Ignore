@@ -3,8 +3,8 @@ from setuptools import setup
 
 setup(
 	name='SVN-Ignore',
-	py_modules=['sr', 'src.index'],
-    version='1.0.4',
+	py_modules=['sr', 'src.cli', 'src.svn_ignore'],
+    version='1.1.0',
     description='An utility that provides .svnignore functionality similar to GIT',
     long_description=open('README.md').read(),
     author='Jord Nijhuis',
@@ -20,7 +20,7 @@ setup(
    	include_package_data=True,
 	entry_points = {
         'console_scripts': [
-        	'svn-ignore = src.index:main'
+        	'svn-ignore = src.cli:main'
         ],
     },
     keywords='svn cli util utils'

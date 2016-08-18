@@ -1,4 +1,6 @@
 # SVN-Ignore
+[![Build Status](https://travis-ci.org/Sidesplitter/SVN-Ignore.svg?branch=master)](https://travis-ci.org/Sidesplitter/SVN-Ignore)
+
 An utility that provides .svnignore functionality similar to GIT. 
 
 The svn:ignore property can only read one ignore file, and won't read any files in subdirectories. 
@@ -18,7 +20,7 @@ it will use the working directory.
 Valid arguments:
 
   - `--no-recursive`: Do not apply the .svnignore file to any of the children of the current directory
-  - `--overwrite`: Overwrite existing svn:ignore properties, This automatically applies	`--no-recursive` as well.
+  - `--overwrite`: Overwrite existing svn:ignore properties.
   - `--ignore-file <file>`: The file to look for. Default is `.svnigore`
   - `--verbose`: Display verbose information
   - `--help`: Display this information
@@ -58,6 +60,10 @@ Simply add `svn-ignore` as a Pre-Commit Hook in Tortoise-SVN.
 
 This is currently not possible and is planned in a future version
 
+## Testing
+
+You can run the tests by calling `python -m unittest discover` in the project root. Automatic testing is done by Travis
+CI.
 ## License
 
 MIT License
