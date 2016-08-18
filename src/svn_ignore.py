@@ -74,13 +74,50 @@ class SVNIgnore:
             # Combine ignore files
             ignores = set(ignores_from_file + existing_ignores + ignores_from_parent)
 
+            #Add exceptions and remove them from the list
+            ignores = self.add_exceptions(directory, ignores)
+
             #apply config
             try:
                 self.set_ignores(directory, ignores)
             except Exception as exception:
                 self.logger.error('Could not write ignores to %s: %s', directory, exception)
 
+    def add_exceptions(self, directory, ignores):
+        """Add every file that was marked with a ! in the ignores to SVN
 
+        :param directory: The directory to work in
+        :param ignores: A list containing the ignores
+
+        :return: A list with ignores minus the exceptions
+        """
+        exceptions = filter(lambda item: item.startswith('!'), ignores)
+
+        for exception in exceptions:
+
+            path = os.path.join(directory, exception.replace('!', ''))
+
+            if(os.path.isfile(path)):
+
+                self.logger.info('Add exception for {} on {}'.format(exception, path))
+                process = subprocess.Popen([
+                    'svn',
+                    'add',
+                    path
+                ],
+                    cwd=directory,
+                    stderr=subprocess.PIPE,
+                    stdout=subprocess.PIPE,
+                ).communicate()
+
+                # Its no problem if the file is already added, so don't raise that exception
+                if process[1] and not process[1].startswith('svn: warning: W150002'):
+                    raise Exception('Error adding exception to SVN: {}'.format(process[1]))
+
+        return list(filter(
+            lambda item: not item.startswith('!'),
+            ignores
+        ))
 
 
     def get_existing_ignores(self, directory):

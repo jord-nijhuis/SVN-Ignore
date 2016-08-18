@@ -6,8 +6,13 @@
 
 An utility that provides .svnignore functionality similar to GIT. 
 
-The svn:ignore property can only read one ignore file, and won't read any files in subdirectories. 
-It also only works for files that exist at the moment of change. SVN-Ignore is a library that changes both of these things.
+Lets face it, the svn:ignore property is pretty poor in comparison to GIT, it does not update itself when you add new
+files, exceptions are not possible, and it cannot be specified in a single file. That's exactly why this utility exists
+
+Features that this utility provides:
+ - A .svnignore file that lets you specify which files should be ignored
+ - The possibility to add exceptions(Lines starting with !) to the SVN Ignore file
+ - Updating the svn:ignore property every time you add new files 
 
 ## Installation
 

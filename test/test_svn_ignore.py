@@ -13,8 +13,8 @@ class TestSVNIgnore(unittest.TestCase):
         """Checkout the SVN repository"""
 
         logging.basicConfig(stream=sys.stdout, format='%(levelname)s: %(message)s', level=logging.WARNING)
-        self.repository_path = os.path.abspath('./test/resources/repository')
-        self.checkout_path = os.path.abspath('./test/resources/checkout')
+        self.repository_path = os.path.abspath(os.path.dirname(__file__) + '/resources/repository')
+        self.checkout_path = os.path.abspath(os.path.dirname(__file__) + '/resources/checkout')
 
         # Clear the checkout
         if os.path.isdir(self.checkout_path):
@@ -63,6 +63,43 @@ class TestSVNIgnore(unittest.TestCase):
             '#comment'
         ], ignores)
 
+    def test_add_exceptions(self):
+        """Check if exceptions (The lines starting with !) also work"""
+
+        path = os.path.join(self.checkout_path, 'directory_exception')
+
+        open(os.path.join(path, 'exception.txt'), 'w+').close()
+
+        self.svn_ignore.add_exceptions(path, [
+            '*.txt',
+            '!exception.txt'
+        ])
+
+        output = subprocess.check_output([
+            'svn',
+            'status'
+        ], cwd=path)
+
+        #Check if the file was added
+        self.assertEqual('A       exception.txt\n', output)
+
+    def test_add_exception_on_already_added_file(self):
+        """Make sure that when an exception is already added it does not raise an error"""
+
+        path = os.path.join(self.checkout_path, 'directory_exception')
+
+        open(os.path.join(path, 'exception.txt'), 'w+').close()
+
+        self.svn_ignore.add_exceptions(path, [
+            '*.txt',
+            '!exception.txt'
+        ])
+
+        self.svn_ignore.add_exceptions(path, [
+            '*.txt',
+            '!exception.txt'
+        ])
+
     def test_get_existing_ignores(self):
         """Test getting ignores from the properties"""
 
@@ -97,6 +134,25 @@ class TestSVNIgnore(unittest.TestCase):
 
         ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory_props'))
         six.assertCountEqual(self, ['EXISTING_VALUE', 'VALUE1'], ignores)
+
+    def test_apply_exception(self):
+        """Check if exceptions are applied"""
+
+        open(os.path.join(self.checkout_path, 'directory_exception', 'exception.txt'), 'w+').close()
+
+        self.svn_ignore.apply()
+
+        ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory_exception'))
+        six.assertCountEqual(self, ['VALUE1', '*.txt'], ignores)
+
+        output = subprocess.check_output([
+            'svn',
+            'status'
+        ], cwd=self.checkout_path)
+
+        #Check if the file was added
+        self.assertIn('A       directory_exception/exception.txt', output.splitlines())
+
 
     def test_apply_overwrite(self):
         self.svn_ignore.overwrite = True

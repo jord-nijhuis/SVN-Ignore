@@ -8,7 +8,7 @@ class TestCLI(unittest.TestCase):
 
     def test_parser_default(self):
 
-        args = self.parser.parse_args()
+        args = self.parser.parse_args([])
         self.assertEqual('.', args.directory)
         self.assertEqual(True, args.recursive)
         self.assertEqual(False, args.overwrite)

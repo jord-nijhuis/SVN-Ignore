@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
     name='SVN-Ignore',
     py_modules=['sr', 'src.cli', 'src.svn_ignore'],
-    version='1.1.0',
+    version='1.1.1',
     description='An utility that provides .svnignore functionality similar to GIT',
     long_description=open('README.md').read(),
     author='Jord Nijhuis',
