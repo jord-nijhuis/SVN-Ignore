@@ -2,7 +2,7 @@
 import sys
 import argparse
 import logging
-from svn_ignore import SVNIgnore
+from src.svn_ignore import SVNIgnore
 
 def create_parser():
     parser = argparse.ArgumentParser(description='An utility that provides .svnignore functionality similar to GIT')

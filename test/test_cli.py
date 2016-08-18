@@ -1,5 +1,5 @@
 import unittest
-from src.cli import create_parser, main
+from src.cli import create_parser
 
 class TestCLI(unittest.TestCase):
 
