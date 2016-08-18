@@ -1,6 +1,6 @@
 # SVN-Ignore
 [![PyPI](https://img.shields.io/pypi/v/svn-ignore.svg)](https://pypi.python.org/pypi/SVN-Ignore/)
-[![Build Status](https://travis-ci.org/Sidesplitter/SVN-Ignore.svg)](https://travis-ci.org/Sidesplitter/SVN-Ignore/)
+[![Build Status]https://api.travis-ci.org/Sidesplitter/SVN-Ignore.svg?branch=master)](https://travis-ci.org/Sidesplitter/SVN-Ignore/)
 [![PyPI](https://img.shields.io/pypi/dd/svn-ignore.svg)](https://pypi.python.org/pypi/SVN-Ignore/)
 [![PyPI](https://img.shields.io/pypi/pyversions/svn-ignore.svg)](https://pypi.python.org/pypi/SVN-Ignore)
 
