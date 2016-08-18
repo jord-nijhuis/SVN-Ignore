@@ -81,7 +81,7 @@ class TestSVNIgnore(unittest.TestCase):
         ], cwd=path)
 
         #Check if the file was added
-        self.assertEqual('A       exception.txt\n', output)
+        self.assertEqual('A       exception.txt\n', output.decode())
 
     def test_add_exception_on_already_added_file(self):
         """Make sure that when an exception is already added it does not raise an error"""
@@ -151,7 +151,7 @@ class TestSVNIgnore(unittest.TestCase):
         ], cwd=self.checkout_path)
 
         #Check if the file was added
-        self.assertIn('A       directory_exception/exception.txt', output.splitlines())
+        self.assertIn('A       directory_exception/exception.txt', output.decode().splitlines())
 
 
     def test_apply_overwrite(self):

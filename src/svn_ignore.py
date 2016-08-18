@@ -111,7 +111,7 @@ class SVNIgnore:
                 ).communicate()
 
                 # Its no problem if the file is already added, so don't raise that exception
-                if process[1] and not process[1].startswith('svn: warning: W150002'):
+                if process[1] and not process[1].decode().startswith('svn: warning: W150002'):
                     raise Exception('Error adding exception to SVN: {}'.format(process[1]))
 
         return list(filter(
