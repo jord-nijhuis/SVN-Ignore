@@ -1,10 +1,17 @@
 #!/usr/bin/env python
 from setuptools import setup
+import sys
 
 def get_long_description():
     try:
+        if(sys.version_info >= (3, 2, 0) and sys.version_info <= (3, 3, 0)):
+            raise Exception('This python version cannot run pypandoc')
+
+        print(sys.version_info)
+
         import pypandoc
-        long_description = pypandoc.convert('README.md','rst',format='markdown')
+        pypandoc.convert('README.md','rst',format='markdown', outputfile='README.rst')
+        long_description = sys.version_info
 
     except Exception:
         print('WARNING: Failed to convert README.md to rst, pypandoc was not present')
