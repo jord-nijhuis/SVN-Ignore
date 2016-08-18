@@ -78,7 +78,7 @@ class SVNIgnore:
             try:
                 self.set_ignores(directory, ignores)
             except Exception as exception:
-                self.logger.error(exception.message)
+                self.logger.error('Could not write ignores to %s: %s', directory, exception)
 
 
 
@@ -101,7 +101,7 @@ class SVNIgnore:
         stdout=subprocess.PIPE,
         ).communicate()
 
-        existing_ignores = process[0].splitlines()
+        existing_ignores = process[0].decode().splitlines()
 
         #Remove newlines
         existing_ignores = list(filter(None, existing_ignores))
