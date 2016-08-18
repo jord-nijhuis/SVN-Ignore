@@ -4,6 +4,7 @@ import subprocess
 import shutil
 import logging
 import sys
+import six
 from src.svn_ignore import SVNIgnore
 
 class TestSVNIgnore(unittest.TestCase):
@@ -49,7 +50,7 @@ class TestSVNIgnore(unittest.TestCase):
         """Check ignores from file"""
 
         ignores = self.svn_ignore.get_ignores_from_file(self.checkout_path)
-        self.assertItemsEqual([
+        six.assertCountEqual(self, [
             'VALUE1'
         ], ignores)
 
@@ -57,7 +58,7 @@ class TestSVNIgnore(unittest.TestCase):
         """Check retrieving ignores from file without removal of comments"""
 
         ignores = self.svn_ignore.get_ignores_from_file(self.checkout_path, removeComments=False)
-        self.assertItemsEqual([
+        six.assertCountEqual(self, [
             'VALUE1',
             '#comment'
         ], ignores)
@@ -66,7 +67,7 @@ class TestSVNIgnore(unittest.TestCase):
         """Test getting ignores from the properties"""
 
         ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory_props'))
-        self.assertItemsEqual([
+        six.assertCountEqual(self, [
             'EXISTING_VALUE'
         ], ignores)
 
@@ -74,7 +75,7 @@ class TestSVNIgnore(unittest.TestCase):
         """Test getting ignores from properties when the property is empty"""
 
         ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory'))
-        self.assertItemsEqual([], ignores)
+        six.assertCountEqual(self, [], ignores)
 
     def test_set_ignore(self):
         """ Test setting the ignore property"""
@@ -82,22 +83,46 @@ class TestSVNIgnore(unittest.TestCase):
         self.svn_ignore.set_ignores(self.checkout_path, ['VALUE1'])
 
         ignores = self.svn_ignore.get_existing_ignores(self.checkout_path)
-        self.assertItemsEqual(['VALUE1'], ignores)
+        six.assertCountEqual(self, ['VALUE1'], ignores)
 
     def test_apply(self):
 
         self.svn_ignore.apply()
 
         ignores = self.svn_ignore.get_existing_ignores(self.checkout_path)
-        self.assertItemsEqual(['VALUE1'], ignores)
+        six.assertCountEqual(self, ['VALUE1'], ignores)
 
         ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory'))
-        self.assertItemsEqual(['VALUE2', 'VALUE1'], ignores)
+        six.assertCountEqual(self, ['VALUE2', 'VALUE1'], ignores)
 
         ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory_props'))
-        self.assertItemsEqual(['EXISTING_VALUE', 'VALUE1'], ignores)
+        six.assertCountEqual(self, ['EXISTING_VALUE', 'VALUE1'], ignores)
 
+    def test_apply_overwrite(self):
+        self.svn_ignore.overwrite = True
+        self.svn_ignore.apply()
 
+        ignores = self.svn_ignore.get_existing_ignores(self.checkout_path)
+        six.assertCountEqual(self, ['VALUE1'], ignores)
+
+        ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory'))
+        six.assertCountEqual(self, ['VALUE2', 'VALUE1'], ignores)
+
+        ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory_props'))
+        six.assertCountEqual(self, ['VALUE1'], ignores)
+
+    def test_apply_no_recusrive(self):
+        self.svn_ignore.recursive = False
+        self.svn_ignore.apply()
+
+        ignores = self.svn_ignore.get_existing_ignores(self.checkout_path)
+        six.assertCountEqual(self, ['VALUE1'], ignores)
+
+        ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory'))
+        six.assertCountEqual(self, ['VALUE2'], ignores)
+
+        ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory_props'))
+        six.assertCountEqual(self, ['EXISTING_VALUE'], ignores)
 if __name__ == '__main__':
     unittest.main()
 

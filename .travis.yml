@@ -13,5 +13,5 @@ before_install:
   - sudo apt-get update
   - sudo apt-get remove subversion
   - sudo apt-get install -qq subversion
-script: py.test
+script: python setup.py test
 sudo: required

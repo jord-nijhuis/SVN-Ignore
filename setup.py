@@ -29,5 +29,7 @@ setup(
             'svn-ignore = src.cli:main'
         ],
     },
-    keywords='svn cli util utils'
+    keywords='svn cli util utils',
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest'],
 )
