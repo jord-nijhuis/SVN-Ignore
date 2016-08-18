@@ -62,8 +62,8 @@ This is currently not possible and is planned in a future version
 
 ## Testing
 
-You can run the tests by calling `python -m unittest discover` in the project root. Automatic testing is done by Travis
-CI.
+You can run the tests by calling `python -m unittest discover` in the project root. Subversion 1.9 is required for
+running the tests. Automatic testing is done by Travis CI.
 ## License
 
 MIT License

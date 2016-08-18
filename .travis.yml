@@ -9,7 +9,10 @@ python:
 install:
   - pip install .
 before_install:
-  - sudo apt-get update -qq
+  - sudo sh -c 'echo "deb http://opensource.wandisco.com/ubuntu `lsb_release -cs` svn19" >> /etc/apt/sources.list.d/subversion19.list'
+  - sudo wget -q http://opensource.wandisco.com/wandisco-debian.gpg -O- | sudo apt-key add -
+  - sudo apt-get update
+  - sudo apt-get remove subversion
   - sudo apt-get install -qq subversion
 script: py.test
 sudo: required
