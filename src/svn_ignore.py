@@ -1,7 +1,7 @@
 import os
 import subprocess
 import logging
-
+import glob2
 
 class SVNIgnore:
 
@@ -94,25 +94,24 @@ class SVNIgnore:
 
         for exception in exceptions:
 
-            path = os.path.join(directory, exception.replace('!', ''))
+            pattern = os.path.join(directory, exception.replace('!', ''))
 
-            if not os.path.isfile(path):
-                continue
+            for file, version in glob2.iglob(pattern, with_matches=True):
 
-            self.logger.info('Add exception for {} on {}'.format(exception, path))
-            process = subprocess.Popen([
-                'svn',
-                'add',
-                path
-            ],
-                cwd=directory,
-                stderr=subprocess.PIPE,
-                stdout=subprocess.PIPE,
-            ).communicate()
+                self.logger.info('Add exception for {} on {}'.format(exception, file))
+                process = subprocess.Popen([
+                    'svn',
+                    'add',
+                    file
+                ],
+                    cwd=directory,
+                    stderr=subprocess.PIPE,
+                    stdout=subprocess.PIPE,
+                ).communicate()
 
-            # Its no problem if the file is already added, so don't raise that exception
-            if process[1] and not process[1].decode().startswith('svn: warning: W150002'):
-                raise Exception('Error adding exception to SVN: {}'.format(process[1]))
+                # Its no problem if the file is already added, so don't raise that exception
+                if process[1] and not process[1].decode().startswith('svn: warning: W150002'):
+                    raise Exception('Error adding exception to SVN: {}'.format(process[1]))
 
         return list(filter(
             lambda item: not item.startswith('!'),

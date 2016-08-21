@@ -27,6 +27,7 @@ setup(
         ],
     },
     keywords='svn cli util utils',
-    setup_requires=['pytest-runner', 'pypandoc'],
+    setup_requires=['pytest-runner'],
+    install_requires=['glob2'],
     tests_require=['pytest', 'six'],
 )
