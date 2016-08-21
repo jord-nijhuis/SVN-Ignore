@@ -1,27 +1,12 @@
 #!/usr/bin/env python
 from setuptools import setup
-import sys
-
-def get_long_description():
-    try:
-        import pypandoc
-        pypandoc.convert('README.md','rst',format='markdown', outputfile='README.rst')
-        long_description = 'README.rst'
-
-    except Exception:
-        print('WARNING: Failed to convert README.md to rst, pypandoc was not present, using md')
-        f = open('README.md')
-        long_description = f.read()
-        f.close()
-
-    return long_description
 
 setup(
     name='SVN-Ignore',
-    py_modules=['sr', 'src.cli', 'src.svn_ignore'],
+    py_modules=['sr', 'src.cli', 'src.svn_igno re'],
     version='1.1.1',
     description='An utility that provides .svnignore functionality similar to GIT',
-    long_description=get_long_description(),
+    long_description='README.rst',
     author='Jord Nijhuis',
     author_email='jord@nijhuis.me',
     url='https://github.com/Sidesplitter/SVN-Ignore',
