@@ -6,8 +6,8 @@ with open('README.rst') as f:
 
 setup(
     name='SVN-Ignore',
-    py_modules=['sr', 'src.cli', 'src.svn_igno re'],
-    version='1.2.1',
+    py_modules=['sr', 'src.cli', 'src.svn_ignore'],
+    version='1.2.2',
     description='An utility that provides .svnignore functionality similar to GIT',
     long_description=long_description,
     author='Jord Nijhuis',
