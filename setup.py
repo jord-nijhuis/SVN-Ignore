@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 from setuptools import setup
 
+with open('README.rst') as f:
+    long_description = f.read()
+
 setup(
     name='SVN-Ignore',
     py_modules=['sr', 'src.cli', 'src.svn_igno re'],
-    version='1.1.1',
+    version='1.2.1',
     description='An utility that provides .svnignore functionality similar to GIT',
-    long_description='README.rst',
+    long_description=long_description,
     author='Jord Nijhuis',
     author_email='jord@nijhuis.me',
     url='https://github.com/Sidesplitter/SVN-Ignore',
