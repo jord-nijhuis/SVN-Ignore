@@ -84,6 +84,56 @@ class TestSVNIgnore(unittest.TestCase):
         # Check if the file was added
         self.assertEqual('A       exception.txt\n', output.decode())
 
+    def test_add_exceptions_recursive(self):
+        """ Make sure we add the exceptions recursively as well"""
+
+        path = os.path.join(self.checkout_path, 'directory_exception')
+
+        # Create the child directory
+        os.mkdir(os.path.join(path, 'child'))
+        subprocess.check_output([
+            'svn',
+            'add',
+            os.path.join(path, 'child')
+        ])
+
+        open(os.path.join(path, 'child', 'exception.txt'), 'w+').close()
+
+        self.svn_ignore.add_exceptions(path, [
+            '*.txt',
+            '!**/exception.txt'
+        ])
+
+        output = subprocess.check_output([
+            'svn',
+            'status'
+        ], cwd=path)
+
+        self.assertEqual('A       child\nA       child/exception.txt\n', output.decode())
+
+    def test_add_exception_recursive_without_parent(self):
+        """ Make sure we don't add exceptions for directories that have not been added yet"""
+
+        path = os.path.join(self.checkout_path, 'directory_exception')
+
+        # Create the child directory
+        os.mkdir(os.path.join(path, 'child'))
+
+        open(os.path.join(path, 'child', 'exception.txt'), 'w+').close()
+
+        self.svn_ignore.add_exceptions(path, [
+            '*.txt',
+            '!**/exception.txt'
+        ])
+
+        output = subprocess.check_output([
+            'svn',
+            'status'
+        ], cwd=path)
+
+        self.assertEqual('?       child\n', output.decode())
+
+
     def test_add_exception_on_already_added_file(self):
         """Make sure that when an exception is already added it does not raise an error"""
 
@@ -183,6 +233,7 @@ class TestSVNIgnore(unittest.TestCase):
 
         ignores = self.svn_ignore.get_existing_ignores(os.path.join(self.checkout_path, 'directory_props'))
         six.assertCountEqual(self, ['EXISTING_VALUE'], ignores)
+
 if __name__ == '__main__':
     unittest.main()
 

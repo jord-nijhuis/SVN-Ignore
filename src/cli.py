@@ -22,7 +22,7 @@ def create_parser():
         '--no-recursive',
         dest='recursive',
         action='store_false',
-        help='Makes the ignore file not apliable child directories.',
+        help='Do not apply the ignore file to child directories.',
         required=False,
         default=True
     )

@@ -102,15 +102,19 @@ class SVNIgnore:
                 process = subprocess.Popen([
                     'svn',
                     'add',
-                    file
+                    file,
                 ],
                     cwd=directory,
                     stderr=subprocess.PIPE,
                     stdout=subprocess.PIPE,
                 ).communicate()
 
+                error = process[1].decode()
+
                 # Its no problem if the file is already added, so don't raise that exception
-                if process[1] and not process[1].decode().startswith('svn: warning: W150002'):
+                # Svn W15002 means that the file has already been added to SVN
+                # Svn E150000 Means that the parent directory has not been added yet
+                if error and not error.startswith('svn: warning: W150002') and not error.startswith('svn: E150000'):
                     raise Exception('Error adding exception to SVN: {}'.format(process[1]))
 
         return list(filter(
