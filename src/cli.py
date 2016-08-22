@@ -4,6 +4,7 @@ import argparse
 import logging
 from src.svn_ignore import SVNIgnore
 
+
 def create_parser():
     parser = argparse.ArgumentParser(description='An utility that provides .svnignore functionality similar to GIT')
 
@@ -21,7 +22,7 @@ def create_parser():
         '--no-recursive',
         dest='recursive',
         action='store_false',
-        help='Makes the ignore file not apliable child directories.',
+        help='Do not apply the ignore file to child directories.',
         required=False,
         default=True
     )

@@ -3,10 +3,10 @@ from setuptools import setup
 
 setup(
     name='SVN-Ignore',
-    py_modules=['sr', 'src.cli', 'src.svn_ignore'],
-    version='1.1.0',
+    py_modules=['sr', 'src.cli', 'src.svn_igno re'],
+    version='1.1.1',
     description='An utility that provides .svnignore functionality similar to GIT',
-    long_description=open('README.md').read(),
+    long_description='README.rst',
     author='Jord Nijhuis',
     author_email='jord@nijhuis.me',
     url='https://github.com/Sidesplitter/SVN-Ignore',
@@ -17,10 +17,7 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
     ],
     include_package_data=True,
@@ -31,5 +28,6 @@ setup(
     },
     keywords='svn cli util utils',
     setup_requires=['pytest-runner'],
-    tests_require=['pytest'],
+    install_requires=['glob2'],
+    tests_require=['pytest', 'six'],
 )
