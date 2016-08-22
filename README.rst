@@ -8,7 +8,7 @@ SVN-Ignore
 .. image:: https://img.shields.io/pypi/pyversions/svn-ignore.svg?maxAge=2592000
    :target: https://pypi.python.org/pypi/SVN-Ignore/
 
-An utility that provides .svnignore functionality similar to GIT.
+A utility that provides .svnignore functionality similar to GIT.
 
 Lets face it, the svn:ignore property is pretty poor in comparison to
 GIT, it does not update itself when you add new files, exceptions are
